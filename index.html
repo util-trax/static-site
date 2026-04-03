@@ -41,9 +41,12 @@
         color: var(--text);
         font-family: var(--font-body);
         cursor: grabbing;
+        overflow-x: hidden;
       }
 
       .page {
+        position: relative;
+        z-index: 1;
         width: min(100%, 960px);
         margin: 0 auto;
         padding: 48px 20px 64px;
@@ -52,8 +55,9 @@
       .shell {
         display: grid;
         justify-items: center;
-        gap: 28px;
+        gap: 40px;
         text-align: center;
+        margin-top: 40px;
       }
 
       .logo {
@@ -63,7 +67,7 @@
       }
 
       .tagline {
-        margin: 8px 0 0;
+        margin: -8px 0 0;
         color: var(--muted);
         font-size: 0.95rem;
         text-transform: uppercase;
@@ -125,6 +129,7 @@
         transform: scaleY(.5);
         transform-origin: center;
         transition: opacity 140ms ease, transform 140ms ease;
+        will-change: transform;
       }
 
       .link-item:hover,
@@ -284,9 +289,92 @@
             link.rel = "noreferrer";
             link.textContent = item.label;
             link.setAttribute("aria-label", item.label);
+            link.dataset.label = item.label;
             link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
             linkList.appendChild(link);
           });
+        }
+
+        function attachCorruptionEffect() {
+          const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+          Array.prototype.forEach.call(linkList.querySelectorAll(".link-item"), function (link) {
+            let activeTimer = null;
+            let settleTimer = null;
+
+            function resetLabel() {
+              window.clearInterval(activeTimer);
+              window.clearTimeout(settleTimer);
+              activeTimer = null;
+              settleTimer = null;
+              link.textContent = link.dataset.label || link.textContent;
+            }
+
+            function startCorruption() {
+              const original = link.dataset.label || link.textContent;
+              let frame = 0;
+
+              resetLabel();
+
+              activeTimer = window.setInterval(function () {
+                const revealCount = Math.floor(frame * 1.75);
+                const scrambled = original
+                  .split("")
+                  .map(function (char, index) {
+                    if (char === " ") {
+                      return " ";
+                    }
+
+                    if (index < revealCount) {
+                      return original.charAt(index);
+                    }
+
+                    if (Math.random() < 0.45) {
+                      return original.charAt(index);
+                    }
+
+                    return scrambleChars.charAt(
+                      Math.floor(Math.random() * scrambleChars.length)
+                    );
+                  })
+                  .join("");
+
+                link.textContent = scrambled;
+                frame += 1;
+
+                if (revealCount >= original.length) {
+                  resetLabel();
+                }
+              }, 36);
+
+              settleTimer = window.setTimeout(resetLabel, 220);
+            }
+
+            link.addEventListener("mouseenter", startCorruption);
+            link.addEventListener("focus", startCorruption);
+            link.addEventListener("mouseleave", resetLabel);
+            link.addEventListener("blur", resetLabel);
+          });
+        }
+
+        function attachModeSwitch() {
+          Array.prototype.forEach.call(modeSwitch.querySelectorAll(".mode-button"), function (button) {
+            button.addEventListener("click", function () {
+              setMode(button.dataset.mode);
+            });
+          });
+
+          document.addEventListener("keydown", function (event) {
+            if (event.key && event.key.toLowerCase() === "m") {
+              setMode(document.body.dataset.mode === "flyer" ? "broadcast" : "flyer");
+            }
+          });
+
+          try {
+            setMode(window.localStorage.getItem("util-site-mode") || "broadcast");
+          } catch (error) {
+            setMode("broadcast");
+          }
         }
 
         const artistName = config.artistName || defaultConfig.artistName;
@@ -301,6 +389,7 @@
 
         renderPlayer(config.musicEmbedUrl);
         renderLinks(config.links);
+        attachCorruptionEffect();
 
         updateMeta('meta[name="description"]', pageDescription);
         updateMeta('meta[property="og:title"]', pageTitle);
