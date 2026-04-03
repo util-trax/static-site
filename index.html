@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Artist Link Hub</title>
+    <meta name="description" content="A simple artist link hub for music and social platforms.">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Artist Link Hub">
+    <meta property="og:description" content="A simple artist link hub for music and social platforms.">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Artist Link Hub">
+    <meta name="twitter:description" content="A simple artist link hub for music and social platforms.">
+    <meta name="twitter:image" content="">
+    <style>
+      :root {
+        --bg: #000000;
+        --text: #f4efe8;
+        --muted: rgba(244, 239, 232, 0.68);
+        --accent: #852616;
+        --radius: 0.5rem;
+        --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        --font-body: "Arial Narrow", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        cursor: grabbing;
+      }
+
+      .page {
+        width: min(100%, 960px);
+        margin: 0 auto;
+        padding: 48px 20px 64px;
+      }
+
+      .shell {
+        display: grid;
+        justify-items: center;
+        gap: 28px;
+        text-align: center;
+      }
+
+      .logo {
+        width: min(100%, 820px);
+        height: auto;
+        display: block;
+      }
+
+      .tagline {
+        margin: -8px 0 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .player-wrap {
+        width: min(100%, 760px);
+      }
+
+      .player-wrap[hidden] {
+        display: none;
+      }
+
+      .player-frame {
+        width: 100%;
+        min-height: 120px;
+        border: 0;
+        border-radius: var(--radius);
+        background: transparent;
+      }
+
+      .player-placeholder {
+        width: 100%;
+        padding: 1rem 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .links {
+        display: grid;
+        gap: 14px;
+        justify-items: center;
+      }
+
+      .link-item {
+        color: var(--accent);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
+        line-height: 1;
+        letter-spacing: var(--link-spacing, 0.08em);
+        text-transform: uppercase;
+        transition: opacity 140ms ease, transform 140ms ease;
+      }
+
+      .link-item:hover,
+      .link-item:focus-visible {
+        opacity: 0.78;
+        transform: translateY(-1px);
+      }
+
+      .empty-state {
+        color: var(--muted);
+        font-size: 0.95rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 36px 16px 48px;
+        }
+
+        .shell {
+          gap: 22px;
+        }
+
+        .tagline {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="shell">
+        <img class="logo" id="logo" src="./util_logo_orange_transparent.png" alt="Artist logo">
+        <p class="tagline" id="tagline">Official links</p>
+
+        <section class="player-wrap" id="player-wrap" aria-label="Music player" hidden>
+          <div class="player-placeholder" id="player-placeholder"></div>
+        </section>
+
+        <nav class="links" id="link-list" aria-label="Artist links"></nav>
+      </div>
+    </main>
+
+    <script src="./site-config.js"></script>
+    <script>
+      (function () {
+        const defaultConfig = {
+          artistName: "Artist Name",
+          pageTitle: "",
+          pageDescription: "",
+          tagline: "",
+          logoUrl: "./util_logo_orange_transparent.png",
+          musicEmbedUrl: "",
+          siteUrl: "",
+          links: []
+        };
+
+        const config = Object.assign({}, defaultConfig, window.SITE_CONFIG || {});
+        const logo = document.getElementById("logo");
+        const tagline = document.getElementById("tagline");
+        const playerWrap = document.getElementById("player-wrap");
+        const playerPlaceholder = document.getElementById("player-placeholder");
+        const linkList = document.getElementById("link-list");
+
+        function updateMeta(selector, value, attribute) {
+          if (!value) {
+            return;
+          }
+
+          const node = document.querySelector(selector);
+          if (node) {
+            node.setAttribute(attribute || "content", value);
+          }
+        }
+
+        function renderPlayer(url) {
+          if (!url) {
+            playerWrap.hidden = true;
+            return;
+          }
+
+          const frame = document.createElement("iframe");
+          frame.className = "player-frame";
+          frame.src = url;
+          frame.title = "Embedded music player";
+          frame.loading = "lazy";
+          frame.allow =
+            "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+
+          playerPlaceholder.remove();
+          playerWrap.hidden = false;
+          playerWrap.appendChild(frame);
+        }
+
+        function renderLinks(items) {
+          linkList.replaceChildren();
+
+          const validLinks = Array.isArray(items)
+            ? items.filter(function (item) {
+                return item && item.label && typeof item.url === "string" && item.url.trim();
+              })
+            : [];
+
+          if (!validLinks.length) {
+            const empty = document.createElement("div");
+            empty.className = "empty-state";
+            empty.textContent = "Add platform links in site-config.js.";
+            linkList.appendChild(empty);
+            return;
+          }
+
+          const widestSpacing = 0.34;
+          const narrowestSpacing = 0.08;
+          const spacingRange = widestSpacing - narrowestSpacing;
+          const lastIndex = Math.max(validLinks.length - 1, 1);
+
+          validLinks.forEach(function (item, index) {
+            const link = document.createElement("a");
+            const progress = index / lastIndex;
+            const spacing = widestSpacing - spacingRange * progress;
+
+            link.className = "link-item";
+            link.href = item.url;
+            link.target = "_blank";
+            link.rel = "noreferrer";
+            link.textContent = item.label;
+            link.setAttribute("aria-label", item.label);
+            link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
+            linkList.appendChild(link);
+          });
+        }
+
+        const artistName = config.artistName || defaultConfig.artistName;
+        const pageTitle = config.pageTitle || artistName;
+        const pageDescription = config.pageDescription || config.tagline || "";
+
+        document.title = pageTitle;
+        logo.src = config.logoUrl || defaultConfig.logoUrl;
+        logo.alt = artistName + " logo";
+        tagline.textContent = config.tagline || "Official links";
+        tagline.hidden = !config.tagline;
+
+        renderPlayer(config.musicEmbedUrl);
+        renderLinks(config.links);
+
+        updateMeta('meta[name="description"]', pageDescription);
+        updateMeta('meta[property="og:title"]', pageTitle);
+        updateMeta('meta[property="og:description"]', pageDescription);
+        updateMeta('meta[property="og:image"]', config.logoUrl);
+        updateMeta('meta[property="og:url"]', config.siteUrl);
+        updateMeta('meta[name="twitter:title"]', pageTitle);
+        updateMeta('meta[name="twitter:description"]', pageDescription);
+        updateMeta('meta[name="twitter:image"]', config.logoUrl);
+      })();
+    </script>
+  </body>
+</html>
