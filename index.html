@@ -20,7 +20,7 @@
         --bg: #000000;
         --text: #f4efe8;
         --muted: rgba(244, 239, 232, 0.68);
-        --accent: #852616;
+        --accent: #851d16;
         --radius: 0.5rem;
         --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
         --font-body: "Arial Narrow", Arial, sans-serif;
@@ -63,11 +63,22 @@
       }
 
       .tagline {
-        margin: -8px 0 0;
+        margin: 8px 0 0;
         color: var(--muted);
         font-size: 0.95rem;
-        letter-spacing: 0.16em;
         text-transform: uppercase;
+        transform: scaleX(0.82) scaleY(1.5);
+        transform-origin: center;
+      }
+
+      .tagline-word {
+        display: inline-block;
+        letter-spacing: -0.075em;
+      }
+
+      .tagline-space {
+        display: inline-block;
+        width: 0.42em;
       }
 
       .player-wrap {
@@ -93,6 +104,8 @@
         font-size: 0.9rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
+        transform: scaleY(1.2);
+        transform-origin: center;
       }
 
       .links {
@@ -109,13 +122,15 @@
         line-height: 1;
         letter-spacing: var(--link-spacing, 0.08em);
         text-transform: uppercase;
+        transform: scaleY(.5);
+        transform-origin: center;
         transition: opacity 140ms ease, transform 140ms ease;
       }
 
       .link-item:hover,
       .link-item:focus-visible {
         opacity: 0.78;
-        transform: translateY(-1px);
+        transform: translateY(-1px) scaleY(1.2);
       }
 
       .empty-state {
@@ -123,6 +138,8 @@
         font-size: 0.95rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
+        transform: scaleY(1.2);
+        transform-origin: center;
       }
 
       @media (max-width: 640px) {
@@ -144,7 +161,8 @@
     <main class="page">
       <div class="shell">
         <img class="logo" id="logo" src="./util_logo_orange_transparent.png" alt="Artist logo">
-        <p class="tagline" id="tagline">Official links</p>
+
+        <div class="tagline" id="tagline">Bäss Müsik Producer</div>
 
         <section class="player-wrap" id="player-wrap" aria-label="Music player" hidden>
           <div class="player-placeholder" id="player-placeholder"></div>
@@ -205,6 +223,34 @@
           playerWrap.appendChild(frame);
         }
 
+        function renderTagline(text) {
+          tagline.replaceChildren();
+
+          if (!text) {
+            tagline.hidden = true;
+            return;
+          }
+
+          tagline.hidden = false;
+
+          const words = String(text).trim().split(/\s+/);
+
+          words.forEach(function (word, index) {
+            const wordSpan = document.createElement("span");
+            wordSpan.className = "tagline-word";
+            wordSpan.textContent = word;
+            tagline.appendChild(wordSpan);
+
+            if (index < words.length - 1) {
+              const spacer = document.createElement("span");
+              spacer.className = "tagline-space";
+              spacer.setAttribute("aria-hidden", "true");
+              spacer.textContent = " ";
+              tagline.appendChild(spacer);
+            }
+          });
+        }
+
         function renderLinks(items) {
           linkList.replaceChildren();
 
@@ -246,12 +292,12 @@
         const artistName = config.artistName || defaultConfig.artistName;
         const pageTitle = config.pageTitle || artistName;
         const pageDescription = config.pageDescription || config.tagline || "";
+        const taglineText = config.tagline || "Bäss Müsik Producer";
 
         document.title = pageTitle;
         logo.src = config.logoUrl || defaultConfig.logoUrl;
         logo.alt = artistName + " logo";
-        tagline.textContent = config.tagline || "Official links";
-        tagline.hidden = !config.tagline;
+        renderTagline(taglineText);
 
         renderPlayer(config.musicEmbedUrl);
         renderLinks(config.links);
