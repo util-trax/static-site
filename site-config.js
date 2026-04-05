@@ -5,7 +5,8 @@ window.SITE_CONFIG = {
   tagline: "",
   siteUrl: "ütil.com",
   logoUrl: "./util_logo_orange_transparent.png",
-  musicEmbedUrl: "",
+  musicEmbedUrl:
+    "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2296822055&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=false&buying=false&download=false&sharing=false",
   links: [
     {
       label: "Beatport",
