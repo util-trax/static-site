@@ -47,7 +47,8 @@ Available fields:
 - `tagline`: optional line below the logo
 - `siteUrl`: published site URL for social metadata
 - `logoUrl`: logo image path or URL
-- `musicEmbedUrl`: optional iframe embed URL for a player
+- `musicEmbedUrl`: optional single iframe embed URL for a player
+- `musicEmbeds`: optional ordered list of iframe embeds for stacked players
 - `links`: ordered list of visible links
 
 Each link object supports:
@@ -59,9 +60,11 @@ Only links with a non-empty `url` are rendered.
 
 ## Music Player
 
-If `musicEmbedUrl` is blank, the player section stays hidden.
+If both `musicEmbedUrl` and `musicEmbeds` are blank, the player section stays hidden.
 
-If you add an embed URL, the player appears between the logo and the links. This is meant for provider embed URLs such as SoundCloud, Bandcamp, or similar iframe-compatible players.
+If you add `musicEmbedUrl`, a single player appears between the logo and the links.
+
+If you add `musicEmbeds`, each iframe in the list is rendered in order, which works well for stacked slim Bandcamp players.
 
 ## Local Preview
 
@@ -74,5 +77,5 @@ Before deploying:
 - Set `siteUrl` to your real Pages URL or custom domain
 - Confirm `logoUrl` points to the correct logo asset
 - Add your live platform URLs
-- Add `musicEmbedUrl` if you want the player enabled
+- Add `musicEmbedUrl` or `musicEmbeds` if you want the player enabled
 - Double-check that no private URLs or sensitive data were added

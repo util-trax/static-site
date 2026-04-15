@@ -5,8 +5,26 @@ window.SITE_CONFIG = {
   tagline: "",
   siteUrl: "ütil.com",
   logoUrl: "./util_logo_orange_transparent.png",
-  musicEmbedUrl:
-    "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2301362435&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=false&buying=false&download=false&sharing=false",
+  musicEmbeds: [
+    {
+      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=ff3614/artwork=none/transparent=true/",
+      title: "Nü Slaves by ÜTIL",
+      style: "border:0; width:42px; height:42px;",
+      seamless: true
+    },
+    {
+      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=851d16/artwork=none/transparent=true/",
+      title: "Nü Slaves by ÜTIL",
+      style: "border:0; width:42px; height:42px;",
+      seamless: true
+    },
+    {
+      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=851d16/artwork=none/transparent=true/",
+      title: "Nü Slaves by ÜTIL",
+      style: "border:0; width:42px; height:42px;",
+      seamless: true
+    }
+  ],
   links: [
     {
       label: "Beatport",

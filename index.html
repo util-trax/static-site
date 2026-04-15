@@ -86,7 +86,9 @@
       }
 
       .player-wrap {
-        width: min(100%, 760px);
+        width: min(100%, 200px);
+        display: grid;
+        gap: 0;
         padding: 12px;
         border: 0;
         border-radius: var(--radius);
@@ -97,13 +99,46 @@
         display: none;
       }
 
-      .player-frame {
-        width: 50%;
-        height: 120px;
-        min-height: 120px;
-        border: 0;
-        border-radius: var(--radius);
+      .player-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .player-frame-wrap {
+        position: relative;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
         background: #000000;
+        overflow: hidden;
+      }
+
+      .player-frame-overlay {
+        position: absolute;
+        inset: 0;
+        background: black;
+        pointer-events: none;
+        mix-blend-mode: soft-light;
+        border: 1px solid white;
+      }
+
+      .player-frame {
+        width: 100%;
+        height: 120px;
+        border: 0;
+        background: #000000;
+      }
+
+      .player-label {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transform: scaleX(0.82) scaleY(1.5);
+        transform-origin: left center;
       }
 
       .player-placeholder {
@@ -192,6 +227,7 @@
           tagline: "",
           logoUrl: "./util_logo_orange_transparent.png",
           musicEmbedUrl: "",
+          musicEmbeds: [],
           siteUrl: "",
           links: []
         };
@@ -214,23 +250,70 @@
           }
         }
 
-        function renderPlayer(url) {
-          if (!url) {
+        function renderPlayer(url, embeds) {
+          const embedItems = Array.isArray(embeds)
+            ? embeds.filter(function (item) {
+                return item && typeof item.src === "string" && item.src.trim();
+              })
+            : [];
+
+          if (!embedItems.length && !url) {
             playerWrap.hidden = true;
             return;
           }
 
-          const frame = document.createElement("iframe");
-          frame.className = "player-frame";
-          frame.src = url;
-          frame.title = "Embedded music player";
-          frame.loading = "lazy";
-          frame.allow =
-            "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-
           playerPlaceholder.remove();
           playerWrap.hidden = false;
-          playerWrap.appendChild(frame);
+
+          const players = embedItems.length
+            ? embedItems
+            : [{ src: url, title: "Embedded music player" }];
+
+          players.forEach(function (item, index) {
+            const playerItem = document.createElement("div");
+            playerItem.className = "player-item";
+
+            const frameWrap = document.createElement("div");
+            frameWrap.className = "player-frame-wrap";
+
+            const frame = document.createElement("iframe");
+            frame.className = "player-frame";
+            frame.src = item.src;
+            frame.title =
+              item.title || "Embedded music player " + String(index + 1);
+            frame.loading = "lazy";
+            frame.allow =
+              "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+
+            if (item.style) {
+              frame.style.cssText = item.style;
+            }
+
+            if (item.seamless) {
+              frame.setAttribute("seamless", "");
+            }
+
+            const overlay = document.createElement("div");
+            overlay.className = "player-frame-overlay";
+
+            const label = document.createElement("span");
+            label.className = "player-label";
+            label.textContent = item.label || formatPlayerLabel(item.title, index);
+
+            frameWrap.appendChild(frame);
+            frameWrap.appendChild(overlay);
+            playerItem.appendChild(frameWrap);
+            playerItem.appendChild(label);
+            playerWrap.appendChild(playerItem);
+          });
+        }
+
+        function formatPlayerLabel(title, index) {
+          if (!title) {
+            return "Track " + String(index + 1);
+          }
+
+          return String(title).replace(/\s+by\s+.+$/i, "");
         }
 
         function renderTagline(text) {
@@ -392,7 +475,7 @@
         logo.alt = artistName + " logo";
         renderTagline(taglineText);
 
-        renderPlayer(config.musicEmbedUrl);
+        renderPlayer(config.musicEmbedUrl, config.musicEmbeds);
         renderLinks(config.links);
         attachCorruptionEffect();
 
