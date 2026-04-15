@@ -252,6 +252,7 @@
           (embedItems.length ? embedItems : [{ src: url, title: "Embedded music player" }]).forEach(function (item, index) {
             const playerItem = document.createElement("div");
             playerItem.className = "player-item";
+            playerItem.style.marginLeft = `${index*42}px`;
 
             const frameWrap = document.createElement("div");
             frameWrap.className = "player-frame-wrap";
@@ -275,6 +276,10 @@
 
             const overlay = document.createElement("div");
             overlay.className = "player-frame-overlay";
+            if (index === 1) {
+              overlay.style.setProperty("background", "#858585", "important");
+              overlay.style.setProperty("mix-blend-mode", "difference", "important");
+            }
 
             const label = document.createElement("span");
             label.className = "player-label";

@@ -13,14 +13,14 @@ window.SITE_CONFIG = {
       seamless: true
     },
     {
-      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=851d16/artwork=none/transparent=true/",
-      title: "Nü Slaves by ÜTIL",
+      src: "https://bandcamp.com/EmbeddedPlayer/track=2798863440/size=small/bgcol=ffffff/linkcol=0687f5/artwork=none/transparent=true/",
+      title: "Arc by ÜTIL",
       style: "border:0; width:42px; height:42px;",
       seamless: true
     },
     {
-      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=851d16/artwork=none/transparent=true/",
-      title: "Nü Slaves by ÜTIL",
+      src: "https://bandcamp.com/EmbeddedPlayer/track=1687698336/size=small/bgcol=000000/linkcol=e99708/artwork=none/transparent=true/",
+      title: "Massively Lost by ÜTIL",
       style: "border:0; width:42px; height:42px;",
       seamless: true
     }
