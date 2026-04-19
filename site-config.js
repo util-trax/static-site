@@ -4,7 +4,7 @@ window.SITE_CONFIG = {
   pageDescription: "ÜTIL :: links",
   tagline: "",
   siteUrl: "ütil.com",
-  logoUrl: "./util_logo_orange_transparent.png",
+  logoUrl: "./util_skelly_yellow_purple_1.jpg",
   musicEmbeds: [
     {
       src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=ff3614/artwork=none/transparent=true/",

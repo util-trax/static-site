@@ -19,8 +19,8 @@
       :root {
         --bg: #000000;
         --text: #f4efe8;
-        --muted: rgba(244, 239, 232, 0.68);
-        --accent: #851d16;
+        --muted: #82882d;
+        --accent: #41209f;
         --radius: 0.5rem;
         --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
         --font-body: "Arial Narrow", Arial, sans-serif;
@@ -118,10 +118,10 @@
       .player-frame-overlay {
         position: absolute;
         inset: 0;
-        background: black;
+        background: #505f32;
         pointer-events: none;
-        mix-blend-mode: soft-light;
-        border: 1px solid white;
+        mix-blend-mode: color-burn;
+        border: 1px solid #f3ff47;
       }
 
       .player-frame {
@@ -205,7 +205,7 @@
   <body>
     <main class="page">
       <div class="shell">
-        <img class="logo" id="logo" src="./util_logo_orange_transparent.png" alt="Artist logo">
+        <img class="logo" id="logo" src="./util_skelly_yellow_purple_1.jpg" alt="Artist logo">
 
         <!-- <div class="tagline" id="tagline">Bäss Müsik Producer</div> -->
 
@@ -277,8 +277,9 @@
             const overlay = document.createElement("div");
             overlay.className = "player-frame-overlay";
             if (index === 1) {
-              overlay.style.setProperty("background", "#858585", "important");
+              overlay.style.setProperty("background", "#aac91b", "important");
               overlay.style.setProperty("mix-blend-mode", "difference", "important");
+              overlay.style.setProperty("border-color", "#8a8f30", "important");
             }
 
             const label = document.createElement("span");
