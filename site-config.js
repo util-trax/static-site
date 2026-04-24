@@ -27,15 +27,7 @@ window.SITE_CONFIG = {
   ],
   links: [
     {
-      label: "Beatport",
-      url: ""
-    },
-    {
-      label: "SoundCloud",
-      url: "https://soundcloud.com/u-til"
-    },
-    {
-      label: "Spotify",
+      label: "YouTube Music",
       url: ""
     },
     {
@@ -43,12 +35,8 @@ window.SITE_CONFIG = {
       url: ""
     },
     {
-      label: "YouTube Music",
-      url: ""
-    },
-    {
-      label: "Deezer",
-      url: ""
+      label: "SoundCloud",
+      url: "https://soundcloud.com/u-til"
     },
     {
       label: "Instagram",
@@ -59,8 +47,20 @@ window.SITE_CONFIG = {
       url: "https://util.bandcamp.com"
     },
     {
+      label: "Beatport",
+      url: ""
+    },
+    {
       label: "YouTube",
       url: "https://www.youtube.com/@util_trax"
+    },
+    {
+      label: "Spotify",
+      url: "https://open.spotify.com/artist/7rgxIeWBBw1j9ADUnxPHic"
+    },
+    {
+      label: "Deezer",
+      url: ""
     },
     {
       label: "TikTok",
