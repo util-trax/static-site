@@ -1,6 +1,6 @@
 window.SITE_CONFIG = {
   artistName: "ÜTIL",
-  pageTitle: "ÜTIL",
+  pageTitle: "contact :: util.trax@gmail.com",
   pageDescription: "ÜTIL :: links",
   tagline: "",
   siteUrl: "ütil.com",
