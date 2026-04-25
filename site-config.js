@@ -7,23 +7,23 @@ window.SITE_CONFIG = {
   logoUrl: "./util_skelly_yellow_purple_1.jpg",
   musicEmbeds: [
     {
-      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=000000/linkcol=ff3614/artwork=none/transparent=true/",
+      src: "https://bandcamp.com/EmbeddedPlayer/track=2789963607/size=small/bgcol=000000/linkcol=ff3614/artwork=none/transparent=true/",
+      title: "Wirehead by ÜTIL",
+      style: "border:0; width:42px; height:42px;",
+      seamless: true
+    },
+    {
+      src: "https://bandcamp.com/EmbeddedPlayer/track=1617117878/size=small/bgcol=ffffff/linkcol=ff3614/artwork=none/transparent=true/",
       title: "Nü Slaves by ÜTIL",
       style: "border:0; width:42px; height:42px;",
       seamless: true
     },
     {
-      src: "https://bandcamp.com/EmbeddedPlayer/track=2798863440/size=small/bgcol=ffffff/linkcol=0687f5/artwork=none/transparent=true/",
+      src: "https://bandcamp.com/EmbeddedPlayer/track=2798863440/size=small/bgcol=000000/linkcol=0687f5/artwork=none/transparent=true/",
       title: "Arc by ÜTIL",
       style: "border:0; width:42px; height:42px;",
       seamless: true
     },
-    {
-      src: "https://bandcamp.com/EmbeddedPlayer/track=1687698336/size=small/bgcol=000000/linkcol=e99708/artwork=none/transparent=true/",
-      title: "Massively Lost by ÜTIL",
-      style: "border:0; width:42px; height:42px;",
-      seamless: true
-    }
   ],
   links: [
     {
