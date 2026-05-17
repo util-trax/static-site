@@ -2,9 +2,9 @@ window.SITE_CONFIG = {
   artistName: "ÜTIL",
   pageTitle: "contact :: util.trax@gmail.com",
   pageDescription: "ÜTIL :: links",
-  tagline: "",
+  tagline: "EDM with teeth",
   siteUrl: "ütil.com",
-  logoUrl: "./util_skelly_yellow_purple_1.jpg",
+  logoUrl: "./logo_monu_12_compressed.jpg",
   musicEmbeds: [
     {
       src: "https://bandcamp.com/EmbeddedPlayer/track=2789963607/size=small/bgcol=000000/linkcol=ff3614/artwork=none/transparent=true/",
