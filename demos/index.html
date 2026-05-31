@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ÜTIL Demos</title>
+  <meta name="description" content="Unreleased ÜTIL demos for label submissions.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ÜTIL Demos">
+  <meta property="og:description" content="Unreleased ÜTIL demos for label submissions.">
+  <meta property="og:image" content="../logo_monu_12_compressed.jpg">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ÜTIL Demos">
+  <meta name="twitter:description" content="Unreleased ÜTIL demos for label submissions.">
+  <meta name="twitter:image" content="../logo_monu_12_compressed.jpg">
+  <style>
+    :root {
+      --bg: #000000;
+      --panel: #101010;
+      --panel-2: #171717;
+      --text: #f4efe8;
+      --muted: #b6b6b6;
+      --accent: #6e6e6e;
+      --demo-accent: #a07164;
+      --line: #2a2a2a;
+      --radius: 0;
+      --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --font-body: "Arial Narrow", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      width: 100vw;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      cursor: grabbing;
+      overflow-x: clip;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      display: grid;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      overflow-x: clip;
+      margin: 0;
+      justify-content: center;
+      padding-bottom: 56px;
+    }
+
+    .logo {
+      position: relative;
+      justify-self: center;
+      width: 1000px;
+      height: 510px;
+      display: block;
+      transform: scale(1.75);
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    .player-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: min(300px, 100%);
+      padding: 12px;
+    }
+
+    .player {
+      display: grid;
+      gap: 12px;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-height: 72px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .track.is-active {
+      border-color: var(--demo-accent);
+      background: var(--panel-2);
+    }
+
+    .play-button {
+      width: 46px;
+      height: 46px;
+      border: 1px solid #ffffff;
+      border-radius: 0;
+      background: #d7d7d7;
+      color: #000000;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .play-button:hover,
+    .play-button:focus-visible {
+      opacity: 0.82;
+      transform: translateY(-1px);
+    }
+
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-left: 14px solid currentColor;
+      margin-left: 3px;
+    }
+
+    .track.is-active .play-icon {
+      width: 14px;
+      height: 18px;
+      border: 0;
+      margin-left: 0;
+      background:
+        linear-gradient(90deg, currentColor 0 5px, transparent 5px 9px, currentColor 9px 14px);
+    }
+
+    .track-main {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+    }
+
+    .track-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 2.5vw, 2.45rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transform: scaleY(0.72);
+      transform-origin: left center;
+      overflow-wrap: anywhere;
+    }
+
+    .track-meta,
+    .track-note,
+    .time {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      transform: scaleX(0.86) scaleY(1.18);
+      transform-origin: left center;
+    }
+
+    .track-note {
+      color: var(--text);
+    }
+
+    .download {
+      color: var(--demo-accent);
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transform: scaleY(0.7);
+      transform-origin: center;
+    }
+
+    .transport {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #050505;
+    }
+
+    .now-playing {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1;
+      text-transform: uppercase;
+      transform: scaleX(0.88) scaleY(1.22);
+      transform-origin: left center;
+    }
+
+    .progress {
+      width: 100%;
+      accent-color: var(--demo-accent);
+    }
+
+    .links {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 2;
+      margin-right: 20px;
+      display: grid;
+      gap: 14px;
+      justify-items: end;
+    }
+
+    .link-item {
+      color: var(--accent);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      line-height: 1;
+      letter-spacing: var(--link-spacing, 0.08em);
+      text-transform: uppercase;
+      transform: scaleY(.5);
+      transform-origin: center;
+      transition: opacity 140ms ease, transform 140ms ease;
+      will-change: transform;
+      overflow-wrap: anywhere;
+      text-wrap: wrap;
+    }
+
+    .link-item:hover,
+    .link-item:focus-visible {
+      opacity: 0.78;
+      transform: translateY(-1px) scaleY(1.2);
+    }
+
+    .empty-state {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      text-transform: uppercase;
+      transform: scaleX(0.88) scaleY(1.18);
+      transform-origin: left center;
+    }
+
+    .private-note {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      background: #050505;
+      color: var(--text);
+      font-size: clamp(1rem, 1.7vw, 1.35rem);
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .private-note-text {
+      display: inline-block;
+      min-width: max-content;
+      padding: 12px 0;
+      animation: ticker 17s linear infinite;
+      transform: translateX(100vw) scaleX(0.86) scaleY(1.18);
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(100vw) scaleX(0.86) scaleY(1.18);
+      }
+
+      to {
+        transform: translateX(-100%) scaleX(0.86) scaleY(1.18);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 64px;
+      }
+
+      .logo {
+        margin-top: 150px;
+      }
+
+      .player-wrap {
+        width: 100%;
+      }
+
+      .track {
+        grid-template-columns: 46px minmax(0, 1fr);
+      }
+
+      .download {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .links {
+        position: relative;
+        top: auto;
+        right: auto;
+        justify-self: end;
+        margin: -60px 16px 72px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <img class="logo" id="logo" src="../logo_monu_12_compressed.jpg" alt="ÜTIL logo">
+
+    <section class="player-wrap" aria-label="Demo player">
+      <div class="player">
+        <div class="track-list" id="track-list"></div>
+        <div class="transport" id="transport" hidden>
+          <div class="now-playing">
+            <span id="now-playing">Select a track</span>
+            <span id="time">0:00 / 0:00</span>
+          </div>
+          <input class="progress" id="progress" type="range" min="0" max="1000" value="0" aria-label="Track progress">
+          <audio id="audio" preload="metadata"></audio>
+        </div>
+      </div>
+    </section>
+
+    <nav class="links" id="link-list" aria-label="Artist links"></nav>
+
+    <div class="private-note" id="private-note">
+      <span class="private-note-text" id="private-note-text">Private unreleased material for label listening. Do not share.</span>
+    </div>
+  </main>
+
+  <script src="../site-config.js"></script>
+  <script src="./demos-config.js"></script>
+  <script>
+    (function () {
+      const siteConfig = window.SITE_CONFIG || {};
+      const demoConfig = window.DEMOS_CONFIG || {};
+      const config = {
+        artistName: "ÜTIL",
+        title: "Demos",
+        note: "Private unreleased material for label listening.",
+        description: "Unreleased tracks. Please do not share outside the receiving A&R or label team.",
+        logoUrl: "../logo_monu_12_compressed.jpg",
+        links: [],
+        tracks: [],
+        ...siteConfig,
+        ...demoConfig
+      };
+
+      const logo = document.getElementById("logo");
+      const linkList = document.getElementById("link-list");
+      const privateNoteText = document.getElementById("private-note-text");
+      const audio = document.getElementById("audio");
+      const trackList = document.getElementById("track-list");
+      const transport = document.getElementById("transport");
+      const progress = document.getElementById("progress");
+      const nowPlaying = document.getElementById("now-playing");
+      const time = document.getElementById("time");
+      let activeIndex = -1;
+
+      function localAssetUrl(url) {
+        if (!url || /^(https?:|data:|\/)/i.test(url)) {
+          return url;
+        }
+
+        if (url.startsWith("../")) {
+          return url;
+        }
+
+        if (url.startsWith("./")) {
+          return "../" + url.slice(2);
+        }
+
+        return "../" + url;
+      }
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds)) {
+          return "0:00";
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        const remaining = Math.floor(seconds % 60).toString().padStart(2, "0");
+        return minutes + ":" + remaining;
+      }
+
+      function setMetadata() {
+        const pageTitle = config.title ? config.artistName + " " + config.title : config.artistName;
+        const pageDescription = config.description || config.pageDescription || "";
+        const logoUrl = localAssetUrl(config.logoUrl);
+
+        document.title = pageTitle;
+        document.querySelector('meta[name="description"]')?.setAttribute("content", pageDescription);
+
+        logo.src = logoUrl;
+        logo.alt = config.artistName + " logo";
+        privateNoteText.textContent = config.note;
+
+        [
+          ['meta[property="og:title"]', pageTitle],
+          ['meta[property="og:description"]', pageDescription],
+          ['meta[property="og:image"]', logoUrl],
+          ['meta[property="og:url"]', config.siteUrl],
+          ['meta[name="twitter:title"]', pageTitle],
+          ['meta[name="twitter:description"]', pageDescription],
+          ['meta[name="twitter:image"]', logoUrl]
+        ].forEach(function ([selector, value]) {
+          if (value) {
+            document.querySelector(selector)?.setAttribute("content", value);
+          }
+        });
+      }
+
+      function renderLinks(items) {
+        linkList.replaceChildren();
+
+        const validLinks = Array.isArray(items) ? items.filter((item) => item?.label && item?.url?.trim()) : [];
+
+        if (!validLinks.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = "Add platform links in site-config.js.";
+          linkList.appendChild(empty);
+          return;
+        }
+
+        const widestSpacing = 0.34;
+        const narrowestSpacing = 0.08;
+        const spacingRange = widestSpacing - narrowestSpacing;
+        const lastIndex = Math.max(validLinks.length - 1, 1);
+
+        validLinks.forEach(function (item, index) {
+          const link = document.createElement("a");
+          const spacing = widestSpacing - spacingRange * (index / lastIndex);
+
+          link.className = "link-item";
+          link.href = item.url;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          link.textContent = item.label;
+          link.setAttribute("aria-label", item.label);
+          link.dataset.label = item.label;
+          link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
+          linkList.appendChild(link);
+        });
+      }
+
+      function attachCorruptionEffect() {
+        const scrambleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        linkList.querySelectorAll(".link-item").forEach(function (link) {
+          let activeTimer = null;
+          let settleTimer = null;
+
+          function resetLabel() {
+            window.clearInterval(activeTimer);
+            window.clearTimeout(settleTimer);
+            activeTimer = null;
+            settleTimer = null;
+            link.textContent = link.dataset.label || link.textContent;
+          }
+
+          function startCorruption() {
+            const original = link.dataset.label || link.textContent;
+            let frame = 0;
+
+            resetLabel();
+
+            activeTimer = window.setInterval(function () {
+              const revealCount = Math.floor(frame * 1.75);
+              const scrambled = original
+                .split("")
+                .map(function (char, index) {
+                  if (char === " ") {
+                    return " ";
+                  }
+
+                  if (index < revealCount || Math.random() < 0.45) {
+                    return original.charAt(index);
+                  }
+
+                  return scrambleChars.charAt(Math.floor(Math.random() * scrambleChars.length));
+                })
+                .join("");
+
+              link.textContent = scrambled;
+              frame += 1;
+
+              if (revealCount >= original.length) {
+                resetLabel();
+              }
+            }, 36);
+
+            settleTimer = window.setTimeout(resetLabel, 220);
+          }
+
+          link.addEventListener("mouseenter", startCorruption);
+          link.addEventListener("focus", startCorruption);
+          link.addEventListener("mouseleave", resetLabel);
+          link.addEventListener("blur", resetLabel);
+        });
+      }
+
+      function updateActiveTrack() {
+        trackList.querySelectorAll(".track").forEach(function (track, index) {
+          track.classList.toggle("is-active", index === activeIndex && !audio.paused);
+          const button = track.querySelector("button");
+          const title = config.tracks[index]?.title || "Track " + String(index + 1);
+          button.setAttribute("aria-label", (index === activeIndex && !audio.paused ? "Pause " : "Play ") + title);
+        });
+      }
+
+      function playTrack(index) {
+        const track = config.tracks[index];
+        if (!track) {
+          return;
+        }
+
+        if (activeIndex === index && !audio.paused) {
+          audio.pause();
+          updateActiveTrack();
+          return;
+        }
+
+        if (activeIndex !== index) {
+          activeIndex = index;
+          audio.src = track.src;
+          nowPlaying.textContent = track.title || "Track " + String(index + 1);
+          progress.value = "0";
+        }
+
+        audio.play().catch(function () {
+          nowPlaying.textContent = "Could not play " + (track.title || "track");
+        });
+        updateActiveTrack();
+      }
+
+      function renderTracks() {
+        const tracks = Array.isArray(config.tracks) ? config.tracks.filter((track) => track?.src) : [];
+        config.tracks = tracks;
+        trackList.replaceChildren();
+
+        if (!tracks.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = "Add MP3 demos in demos/audio and list them in demos/demos-config.js.";
+          trackList.appendChild(empty);
+          return;
+        }
+
+        transport.hidden = false;
+
+        tracks.forEach(function (track, index) {
+          const item = document.createElement("article");
+          item.className = "track";
+
+          const button = document.createElement("button");
+          button.className = "play-button";
+          button.type = "button";
+          button.addEventListener("click", function () {
+            playTrack(index);
+          });
+
+          const icon = document.createElement("span");
+          icon.className = "play-icon";
+          icon.setAttribute("aria-hidden", "true");
+
+          const main = document.createElement("div");
+          main.className = "track-main";
+
+          const title = document.createElement("h2");
+          title.className = "track-title";
+          title.textContent = track.title || "Track " + String(index + 1);
+
+          const meta = document.createElement("div");
+          meta.className = "track-meta";
+          meta.textContent = [track.bpm, track.key, track.genre].filter(Boolean).join(" / ");
+
+          const note = document.createElement("div");
+          note.className = "track-note";
+          note.textContent = track.note || "";
+
+          const download = document.createElement("a");
+          download.className = "download";
+          download.href = track.src;
+          download.download = "";
+          download.textContent = "MP3";
+          download.setAttribute("aria-label", "Download " + title.textContent);
+
+          button.appendChild(icon);
+          main.appendChild(title);
+          if (meta.textContent) {
+            main.appendChild(meta);
+          }
+          if (note.textContent) {
+            main.appendChild(note);
+          }
+          item.appendChild(button);
+          item.appendChild(main);
+          item.appendChild(download);
+          trackList.appendChild(item);
+        });
+      }
+
+      audio.addEventListener("play", updateActiveTrack);
+      audio.addEventListener("pause", updateActiveTrack);
+      audio.addEventListener("ended", function () {
+        const nextIndex = activeIndex + 1;
+        if (config.tracks[nextIndex]) {
+          playTrack(nextIndex);
+        } else {
+          updateActiveTrack();
+        }
+      });
+      audio.addEventListener("timeupdate", function () {
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          progress.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+        }
+
+        time.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+      });
+      audio.addEventListener("loadedmetadata", function () {
+        time.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+      });
+      progress.addEventListener("input", function () {
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          audio.currentTime = (Number(progress.value) / 1000) * audio.duration;
+        }
+      });
+
+      setMetadata();
+      renderLinks(config.links);
+      attachCorruptionEffect();
+      renderTracks();
+      updateActiveTrack();
+    })();
+  </script>
+</body>
+
+</html>

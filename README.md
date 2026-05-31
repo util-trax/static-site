@@ -14,6 +14,9 @@ The current version is intentionally stripped down:
 
 - `index.html`: layout, styles, and client-side rendering
 - `site-config.js`: artist name, metadata, logo path, embed URL, and links
+- `demos/index.html`: unlisted `/demos` page with a local MP3 player
+- `demos/demos-config.js`: demo page copy and track list
+- `demos/audio/`: local MP3 demo files
 - `util_logo_orange_transparent.png`: current logo asset
 - `_headers`: response headers for Cloudflare Pages
 
@@ -65,6 +68,22 @@ If both `musicEmbedUrl` and `musicEmbeds` are blank, the player section stays hi
 If you add `musicEmbedUrl`, a single player appears between the logo and the links.
 
 If you add `musicEmbeds`, each iframe in the list is rendered in order, which works well for stacked slim Bandcamp players.
+
+## Demo Submissions
+
+The unlisted `/demos` page is meant for label submissions and is marked `noindex, nofollow`.
+
+To update it:
+
+1. Add MP3 files to `demos/audio/`.
+2. Edit `demos/demos-config.js`.
+3. Set each track's `title`, `src`, `bpm`, `key`, `genre`, and `note`.
+
+Example track source:
+
+```js
+src: "./audio/my-unreleased-track.mp3"
+```
 
 ## Local Preview
 
