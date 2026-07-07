@@ -56,7 +56,7 @@ window.SITE_CONFIG = {
     },
     {
       label: "Spotify",
-      url: "https://open.spotify.com/artist/7rgxIeWBBw1j9ADUnxPHic"
+      url: "https://open.spotify.com/artist/30D1uAuAPuIoFgCCLmbCVe"
     },
     {
       label: "Deezer",
