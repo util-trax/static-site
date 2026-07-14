@@ -32,7 +32,7 @@ window.SITE_CONFIG = {
     },
     {
       label: "Apple Music",
-      url: ""
+      url: "https://music.apple.com/us/artist/%C3%BCtil/1893119503"
     },
     {
       label: "SoundCloud",
@@ -68,7 +68,7 @@ window.SITE_CONFIG = {
     },
     {
       label: "X",
-      url: "https://x.com/util__"
+      url: "" //"https://x.com/util__"
     }
   ]
 };
