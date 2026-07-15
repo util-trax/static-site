@@ -18,6 +18,25 @@
   <meta name="twitter:title" content="Artist Link Hub">
   <meta name="twitter:description" content="A simple artist link hub for music and social platforms.">
   <meta name="twitter:image" content="">
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2010625689577248');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2010625689577248&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
   <style>
     :root {
       --bg: #000000;
@@ -294,6 +313,14 @@
       const playerPlaceholder = document.getElementById("player-placeholder");
       const linkList = document.getElementById("link-list");
 
+      function trackMetaEvent(eventName, parameters) {
+        if (typeof window.fbq !== "function") {
+          return;
+        }
+
+        window.fbq("trackCustom", eventName, parameters);
+      }
+
       function renderPlayer(url, embeds) {
         const embedItems = Array.isArray(embeds) ? embeds.filter((item) => item?.src?.trim()) : [];
 
@@ -415,6 +442,13 @@
           link.dataset.label = item.label;
           link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
           link.style.setProperty("--link-color", linkColor);
+          link.addEventListener("click", function () {
+            trackMetaEvent("OutboundLinkClick", {
+              content_name: item.label,
+              destination_url: item.url,
+              link_location: "home_links"
+            });
+          });
           linkList.appendChild(link);
         });
       }
@@ -494,6 +528,14 @@
       renderPlayer(config.musicEmbedUrl, config.musicEmbeds);
       renderLinks(config.links);
       attachCorruptionEffect();
+
+      document.querySelector(".shirt-outer")?.addEventListener("click", function (event) {
+        trackMetaEvent("OutboundLinkClick", {
+          content_name: "Merch",
+          destination_url: event.currentTarget.href,
+          link_location: "home_merch"
+        });
+      });
 
       [
         ['meta[name="description"]', pageDescription],

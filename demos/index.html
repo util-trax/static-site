@@ -19,6 +19,26 @@
   <meta name="twitter:title" content="ÜTIL Demos">
   <meta name="twitter:description" content="Unreleased ÜTIL demos for label submissions.">
   <meta name="twitter:image" content="../logo_monu_12_compressed.jpg">
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2010625689577248');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2010625689577248&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
     :root {
       --bg: #000000;
@@ -362,7 +382,8 @@
     <nav class="links" id="link-list" aria-label="Artist links"></nav>
 
     <div class="private-note" id="private-note">
-      <span class="private-note-text" id="private-note-text">Private unreleased material for label listening. Do not share.</span>
+      <span class="private-note-text" id="private-note-text">Private unreleased material for label listening. Do not
+        share.</span>
     </div>
   </main>
 
@@ -394,6 +415,14 @@
       const nowPlaying = document.getElementById("now-playing");
       const time = document.getElementById("time");
       let activeIndex = -1;
+
+      function trackMetaEvent(eventName, parameters) {
+        if (typeof window.fbq !== "function") {
+          return;
+        }
+
+        window.fbq("trackCustom", eventName, parameters);
+      }
 
       function localAssetUrl(url) {
         if (!url || /^(https?:|data:|\/)/i.test(url)) {
@@ -485,6 +514,13 @@
           link.dataset.label = item.label;
           link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
           link.style.setProperty("--link-color", linkColor);
+          link.addEventListener("click", function () {
+            trackMetaEvent("OutboundLinkClick", {
+              content_name: item.label,
+              destination_url: item.url,
+              link_location: "demos_links"
+            });
+          });
           linkList.appendChild(link);
         });
       }
@@ -602,6 +638,11 @@
           button.className = "play-button";
           button.type = "button";
           button.addEventListener("click", function () {
+            trackMetaEvent("DemoPlayClick", {
+              content_name: track.title || "Track " + String(index + 1),
+              content_type: "demo_track",
+              track_index: index + 1
+            });
             playTrack(index);
           });
 
@@ -630,6 +671,14 @@
           download.download = "";
           download.textContent = "MP3";
           download.setAttribute("aria-label", "Download " + title.textContent);
+          download.addEventListener("click", function () {
+            trackMetaEvent("DemoDownloadClick", {
+              content_name: title.textContent,
+              content_type: "demo_track",
+              track_index: index + 1,
+              destination_url: download.href
+            });
+          });
 
           button.appendChild(icon);
           main.appendChild(title);
