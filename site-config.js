@@ -70,5 +70,28 @@ window.SITE_CONFIG = {
       label: "X",
       url: "" //"https://x.com/util__"
     }
-  ]
+  ],
+  adLanding: {
+    pageTitle: "Listen to ÜTIL",
+    pageDescription: "Choose your streaming platform.",
+    defaultTrackTitle: "ÜTIL",
+    defaultPlatforms: [
+      "Spotify",
+      "Apple Music",
+      "YouTube Music",
+      "SoundCloud",
+      "Bandcamp"
+    ],
+    tracks: {
+      wirehead: {
+        title: "Wirehead",
+        links: {
+          spotify: "https://open.spotify.com/album/6zL18pyeIYkx2HlFAxxcZj",
+          "apple music": "https://music.apple.com/us/album/wirehead-single/6780818614",
+          soundcloud: "https://soundcloud.com/u-til/wirehead",
+          bandcamp: "https://util.bandcamp.com/track/wirehead"
+        }
+      },
+    }
+  }
 };

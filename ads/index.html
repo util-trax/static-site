@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Listen to ÜTIL</title>
+  <meta name="description" content="Choose your streaming platform.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Listen to ÜTIL">
+  <meta property="og:description" content="Choose your streaming platform.">
+  <meta property="og:image" content="../logo_monu_12_compressed.jpg">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Listen to ÜTIL">
+  <meta name="twitter:description" content="Choose your streaming platform.">
+  <meta name="twitter:image" content="../logo_monu_12_compressed.jpg">
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2010625689577248');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=2010625689577248&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #f4efe8;
+      --muted: #b6b6b6;
+      --accent: #6e6e6e;
+      --font-display: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      --font-body: "Arial Narrow", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      width: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      cursor: grabbing;
+      overflow-x: clip;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: 28px 18px;
+      overflow: hidden;
+    }
+
+    .logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(1120px, 180vw);
+      height: auto;
+      opacity: 0.72;
+      transform: translate(-50%, -55%) scale(1.25);
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    .content {
+      z-index: 1;
+      width: min(100%, 520px);
+      display: grid;
+      gap: 28px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .eyebrow,
+    .track-title {
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 1rem;
+      transform: scaleX(0.82) scaleY(1.35);
+      transform-origin: center;
+    }
+
+    .eyebrow {
+      position: absolute;
+      top: 15%;
+      color: var(--muted);
+    }
+
+    .track-title {
+      font-size: 1.5rem;
+      position: absolute;
+      top: 10%;
+      max-width: 100%;
+      /* font-family: var(--font-display);
+      font-size: clamp(4.2rem, 18vw, 9rem);
+      line-height: 0.82;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+      transform: scaleY(0.62);
+      transform-origin: center; */
+    }
+
+    .links {
+      position: absolute;
+      top: 60%;
+      width: min(100%, 390px);
+      display: grid;
+      gap: 12px;
+      justify-items: stretch;
+    }
+
+    .link-item {
+      min-height: 54px;
+      display: grid;
+      place-items: center;
+      color: var(--link-color, var(--text));
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 9vw, 3.2rem);
+      line-height: 0.9;
+      letter-spacing: var(--link-spacing, 0.08em);
+      text-decoration: none;
+      text-transform: uppercase;
+      transform: scaleY(0.68);
+      transform-origin: center;
+      transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease;
+      overflow-wrap: anywhere;
+    }
+
+    .link-item:hover,
+    .link-item:focus-visible {
+      opacity: 0.82;
+      border-color: var(--link-color, var(--text));
+      transform: translateY(-1px) scaleY(0.92);
+    }
+
+    .empty-state {
+      color: var(--muted);
+      font-size: 1rem;
+      text-transform: uppercase;
+      transform: scaleX(0.86) scaleY(1.2);
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        align-items: end;
+        padding-bottom: 42px;
+      }
+
+      .logo {
+        top: 32%;
+        width: 240vw;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .content {
+        gap: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <img class="logo" id="logo" src="../logo_monu_12_compressed.jpg" alt="ÜTIL logo">
+    <section class="content" aria-labelledby="track-title">
+      <p class="eyebrow" id="eyebrow">Listen now</p>
+      <p class="track-title" id="track-title"></p>
+      <nav class="links" id="link-list" aria-label="Streaming links"></nav>
+    </section>
+  </main>
+
+  <script src="../site-config.js"></script>
+  <script>
+    (function () {
+      const config = {
+        artistName: "Artist Name",
+        logoUrl: "../logo_monu_12_compressed.jpg",
+        pageTitle: "",
+        pageDescription: "",
+        siteUrl: "",
+        links: [],
+        adLanding: {},
+        ...(window.SITE_CONFIG || {})
+      };
+
+      const landingConfig = {
+        pageTitle: "Listen to " + config.artistName,
+        pageDescription: "Choose your streaming platform.",
+        defaultTrackTitle: config.artistName,
+        defaultPlatforms: ["Spotify", "Apple Music", "YouTube Music", "SoundCloud", "Bandcamp"],
+        tracks: {},
+        ...(config.adLanding || {})
+      };
+      const params = new URLSearchParams(window.location.search);
+      const trackSlug = String(params.get("track") || "").trim().toLowerCase();
+      const trackConfig = landingConfig.tracks?.[trackSlug] || null;
+      const linkList = document.getElementById("link-list");
+      const logo = document.getElementById("logo");
+      const trackTitle = document.getElementById("track-title");
+      const eyebrow = document.getElementById("eyebrow");
+
+      function normalizeLabel(label) {
+        return String(label || "").trim().toLowerCase();
+      }
+
+      function trackMetaEvent(eventName, parameters) {
+        if (typeof window.fbq !== "function") {
+          return;
+        }
+
+        window.fbq("trackCustom", eventName, parameters);
+      }
+
+      function getStreamingLinks() {
+        const defaultLabels = new Set((landingConfig.defaultPlatforms || []).map(normalizeLabel));
+        const trackLinks = trackConfig?.links || {};
+        const homeLinksByLabel = new Map(
+          (Array.isArray(config.links) ? config.links : [])
+            .filter((item) => item?.label && defaultLabels.has(normalizeLabel(item.label)))
+            .map((item) => [normalizeLabel(item.label), item])
+        );
+
+        return (landingConfig.defaultPlatforms || [])
+          .map((label) => {
+            const lbl = normalizeLabel(label);
+            const homeLink = homeLinksByLabel.get(lbl);
+            return {
+              label,
+              url: trackLinks[lbl] || homeLink?.url || ""
+            };
+          })
+          .filter((item) => item.url?.trim());
+      }
+
+      function renderLinks(items) {
+        linkList.replaceChildren();
+
+        if (!items.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = "Streaming links coming soon.";
+          linkList.appendChild(empty);
+          return;
+        }
+
+        const widestSpacing = 0.18;
+        const narrowestSpacing = 0.04;
+        const spacingRange = widestSpacing - narrowestSpacing;
+        const darkestLinkValue = 255;
+        const lightestLinkValue = 148;
+        const linkColorRange = lightestLinkValue - darkestLinkValue;
+        const lastIndex = Math.max(items.length - 1, 1);
+
+        items.forEach(function (item, index) {
+          const link = document.createElement("a");
+          const progress = index / lastIndex;
+          const spacing = widestSpacing - spacingRange * progress;
+          const linkColorValue = Math.round(darkestLinkValue + linkColorRange * progress);
+          const linkColor = "rgb(" + linkColorValue + " " + linkColorValue + " " + linkColorValue + ")";
+
+          link.className = "link-item";
+          link.href = item.url;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          link.textContent = item.label;
+          link.setAttribute("aria-label", item.label);
+          link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
+          link.style.setProperty("--link-color", linkColor);
+          link.addEventListener("click", function () {
+            trackMetaEvent("StreamingLinkClick", {
+              content_name: item.label,
+              content_category: trackConfig?.title, // || landingConfig.defaultTrackTitle,
+              destination_url: item.url,
+              link_location: "meta_ad_landing",
+              track_slug: trackSlug || "default"
+            });
+          });
+          linkList.appendChild(link);
+        });
+      }
+
+      const titleText = trackConfig?.title || landingConfig.defaultTrackTitle || config.artistName;
+      const pageTitle = trackConfig?.title ? trackConfig.title + " - " + config.artistName : landingConfig.pageTitle;
+      const pageDescription = landingConfig.pageDescription || config.pageDescription || "";
+      const logoUrl = String(config.logoUrl || "../logo_monu_12_compressed.jpg").replace(/^\.\//, "../");
+
+      document.title = pageTitle;
+      logo.src = logoUrl;
+      logo.alt = config.artistName + " logo";
+      eyebrow.textContent = "Listen now";
+      trackTitle.textContent = trackConfig?.title ? `ÜTIL :: ${trackConfig.title}`: 'ÜTIL';
+
+      renderLinks(getStreamingLinks());
+
+      [
+        ['meta[name="description"]', pageDescription],
+        ['meta[property="og:title"]', pageTitle],
+        ['meta[property="og:description"]', pageDescription],
+        ['meta[property="og:image"]', logoUrl],
+        ['meta[property="og:url"]', config.siteUrl],
+        ['meta[name="twitter:title"]', pageTitle],
+        ['meta[name="twitter:description"]', pageDescription],
+        ['meta[name="twitter:image"]', logoUrl]
+      ].forEach(function ([selector, value]) {
+        if (value) {
+          document.querySelector(selector)?.setAttribute("content", value);
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
