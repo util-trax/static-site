@@ -92,6 +92,30 @@ window.SITE_CONFIG = {
           bandcamp: "https://util.bandcamp.com/track/wirehead"
         }
       },
+      carcinophrenic: {
+        title: "Carcinophrenic",
+        links: {
+          spotify: "https://open.spotify.com/album/2r9UW4xQKEf8J29JnbMXuB",
+          soundcloud: "https://soundcloud.com/u-til/carcinophrenic",
+          bandcamp: "https://util.bandcamp.com/track/carcinophrenic"
+        }
+      },
+      trench: {
+        title: "Trench",
+        links: {
+          spotify: "https://open.spotify.com/album/40yJb4JXz8mdjBrpqJy00j",
+          soundcloud: "https://soundcloud.com/u-til/trench",
+          bandcamp: "https://util.bandcamp.com/track/trench"
+        }
+      },
+      icbm: {
+        title: "ICBM",
+        links: {
+          spotify: "https://open.spotify.com/album/3g61irxoPrVw6xjwGeFVap",
+          soundcloud: "https://soundcloud.com/u-til/icbm",
+          bandcamp: "https://util.bandcamp.com/track/icbm"
+        }
+      },
     }
   }
 };
