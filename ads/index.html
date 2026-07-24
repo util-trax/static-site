@@ -235,6 +235,8 @@
         }
 
         window.fbq("trackCustom", eventName, parameters);
+        parameters.content_type = 'product';
+        parameters.content_ids = [parameters.content_name];
         window.fbq("track", "ViewContent", parameters);
       }
 
