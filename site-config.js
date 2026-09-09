@@ -122,7 +122,7 @@ window.SITE_CONFIG = {
       },
       geiger: {
         title: "Geiger",
-        metaPixelId: "1086644987273096",
+        metaPixelId: "2703672606697461",
         links: {
           "apple music": "https://music.apple.com/us/album/geiger-single/6806253154",
           spotify: "https://open.spotify.com/album/66ZB6TPrAQw6MMCyJnPBus",
