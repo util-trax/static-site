@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Listen to ÜTIL">
   <meta name="twitter:description" content="Choose your streaming platform.">
   <meta name="twitter:image" content="../logo_monu_12_compressed.jpg">
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel Code (initialized per-track after config loads) -->
   <script>
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return; n = f.fbq = function () {
@@ -31,11 +31,7 @@
       s.parentNode.insertBefore(t, s)
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '2010625689577248');
-    fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2010625689577248&ev=PageView&noscript=1" /></noscript>
   <!-- End Meta Pixel Code -->
   <style>
     :root {
@@ -213,6 +209,7 @@
         pageTitle: "Listen to " + config.artistName,
         pageDescription: "Choose your streaming platform.",
         defaultTrackTitle: config.artistName,
+        defaultMetaPixelId: "2010625689577248",
         defaultPlatforms: ["Spotify", "Apple Music", "YouTube Music", "SoundCloud", "Bandcamp"],
         tracks: {},
         ...(config.adLanding || {})
@@ -220,24 +217,33 @@
       const params = new URLSearchParams(window.location.search);
       const trackSlug = String(params.get("track") || "").trim().toLowerCase();
       const trackConfig = landingConfig.tracks?.[trackSlug] || null;
+      const metaPixelId = String(
+        trackConfig?.metaPixelId || landingConfig.defaultMetaPixelId || ""
+      ).trim();
       const linkList = document.getElementById("link-list");
       const logo = document.getElementById("logo");
       const trackTitle = document.getElementById("track-title");
       const eyebrow = document.getElementById("eyebrow");
 
+      if (metaPixelId && typeof window.fbq === "function") {
+        window.fbq("init", metaPixelId);
+        window.fbq("track", "PageView");
+      }
+
       function normalizeLabel(label) {
         return String(label || "").trim().toLowerCase();
       }
 
-      function trackMetaEvent(eventName, parameters) {
+      function trackViewContent(parameters) {
         if (typeof window.fbq !== "function") {
           return;
         }
 
-        window.fbq("trackCustom", eventName, parameters);
-        parameters.content_type = 'product';
-        parameters.content_ids = [parameters.content_name];
-        window.fbq("track", "ViewContent", parameters);
+        window.fbq("track", "ViewContent", {
+          ...parameters,
+          content_type: "product",
+          content_ids: [parameters.content_name]
+        });
       }
 
       function getStreamingLinks() {
@@ -296,9 +302,9 @@
           link.style.setProperty("--link-spacing", spacing.toFixed(3) + "em");
           link.style.setProperty("--link-color", linkColor);
           link.addEventListener("click", function () {
-            trackMetaEvent("StreamingLinkClick", {
+            trackViewContent({
               content_name: item.label,
-              content_category: trackConfig?.title, // || landingConfig.defaultTrackTitle,
+              content_category: trackConfig?.title,
               destination_url: item.url,
               link_location: "meta_ad_landing",
               track_slug: trackSlug || "default"

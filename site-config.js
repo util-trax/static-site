@@ -75,6 +75,7 @@ window.SITE_CONFIG = {
     pageTitle: "Listen to ÜTIL",
     pageDescription: "Choose your streaming platform.",
     defaultTrackTitle: "ÜTIL",
+    defaultMetaPixelId: "2010625689577248",
     defaultPlatforms: [
       "Spotify",
       "Apple Music",
@@ -95,6 +96,7 @@ window.SITE_CONFIG = {
       carcinophrenic: {
         title: "Carcinophrenic",
         links: {
+          "apple music": "https://music.apple.com/us/song/carcinophrenic/6790388377",
           spotify: "https://open.spotify.com/album/2r9UW4xQKEf8J29JnbMXuB",
           soundcloud: "https://soundcloud.com/u-til/carcinophrenic",
           bandcamp: "https://util.bandcamp.com/track/carcinophrenic"
@@ -103,6 +105,7 @@ window.SITE_CONFIG = {
       trench: {
         title: "Trench",
         links: {
+          "apple music": "https://music.apple.com/us/song/trench/6791079154",
           spotify: "https://open.spotify.com/album/40yJb4JXz8mdjBrpqJy00j",
           soundcloud: "https://soundcloud.com/u-til/trench",
           bandcamp: "https://util.bandcamp.com/track/trench"
@@ -111,9 +114,20 @@ window.SITE_CONFIG = {
       icbm: {
         title: "ICBM",
         links: {
+          "apple music": "https://music.apple.com/us/song/icbm/6790388574",
           spotify: "https://open.spotify.com/album/3g61irxoPrVw6xjwGeFVap",
           soundcloud: "https://soundcloud.com/u-til/icbm",
           bandcamp: "https://util.bandcamp.com/track/icbm"
+        }
+      },
+      geiger: {
+        title: "Geiger",
+        metaPixelId: "1086644987273096",
+        links: {
+          "apple music": "https://music.apple.com/us/album/geiger-single/6806253154",
+          spotify: "https://open.spotify.com/album/66ZB6TPrAQw6MMCyJnPBus",
+          soundcloud: "https://soundcloud.com/u-til/geiger",
+          bandcamp: "https://util.bandcamp.com/track/geiger"
         }
       },
     }
